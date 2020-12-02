@@ -1,52 +1,154 @@
- let weather = {
-        paris: {
-          temp: 19.7,
-          humidity: 80,
-        },
-        tokyo: {
-          temp: 17.3,
-          humidity: 50,
-        },
-        lisbon: {
-          temp: 30.2,
-          humidity: 20,
-        },
-        "san francisco": {
-          temp: 20.9,
-          humidity: 100,
-        },
-        moscow: {
-          temp: -5,
-          humidity: 20,
-        },
-      };
+function fomratDate(date) {
+  // Set Local Time //
+  let currentHour = date.getHours();
+  if (currentHour < 10) {
+    currentHour = `0${currentHour}`;
+  }
+  let currentMinutes = date.getMinutes();
+  if (currentMinutes < 10) {
+    currentMinutes = `0${currentMinutes}`;
+  }
+  let currentTime = `${currentHour}:${currentMinutes}`;
 
-      let city = prompt("Enter a city for weather forecast");
-      city = city.toLocaleLowerCase();
-      city = city.trim();
+  let time = document.querySelector("#local-time");
+  time.innerHTML = currentTime;
 
-      if (city === "paris") {
-        alert(`It is currently 19.7°C in ${city} with a humidity of 80%`);
+  //Set Local Date
+  let months = [
+    "January",
+    "February",
+    "March",
+    "April",
+    "May",
+    "June",
+    "July",
+    "August",
+    "September",
+    "October",
+    "November",
+    "December",
+  ];
+
+  let currentDay = date.getDate();
+  let currentMonth = months[date.getMonth()];
+  let currentYear = date.getFullYear();
+
+  if (currentDay === 1) {
+    descriptor = "st";
+  } else {
+    if (currentDay === 2) {
+      descriptor = "nd";
+    } else {
+      if (currentDay === 3) {
+        descriptor = "rd";
       } else {
-        if (city === "moscow") {
-          alert(`It is currently -5°C in ${city} with a humidity of 20%`);
-        } else {
-          if (city === "san fransisco") {
-            alert(`It is currently 20.9°C in ${city} with a humidity of 100%`);
-          } else {
-            if (city === "tokyo") {
-              alert(`It is currently 17.3°C in ${city} with a humidity of 50%`);
-            } else {
-              if (city === "lisbon") {
-                alert(
-                  `It is currently 30.2°C in ${city} with a humidity of 20%`
-                );
-              } else {
-                alert(
-                  `Sorry, we don't know the weather for ${city}, try going to https://www.google.com/search?q=weather+${city}`
-                );
-              }
-            }
-          }
-        }
+        descriptor = "th";
       }
+    }
+  }
+
+  return `${currentDay}${descriptor} ${currentMonth} ${currentYear}`;
+}
+
+//Display correct weekdays
+let weeks = [
+  "Sunday",
+  "Monday",
+  "Tuesday",
+  "Wednesday",
+  "Thursday",
+  "Friday",
+  "Saturday",
+];
+
+function realTemp(response) {
+  //retrieve temperature
+  let realTemp = Math.round(response.data.main.temp);
+  let newTemp = document.querySelector("#currentTemp");
+  newTemp.innerHTML = `${realTemp}`;
+}
+
+function celsiusTemp(event) {
+  //Display Celsius
+  event.preventDefault();
+  let inputCity = document.querySelector("#input-city");
+
+  let cityName = `${inputCity.value}`;
+  let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
+  let units = "metric";
+  let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}`;
+
+  axios.get(apiUrl).then(realTemp);
+}
+
+function fahrenheightTemp(event) {
+  //Display Fahrenheight
+  event.preventDefault();
+
+  let inputCity = document.querySelector("#input-city");
+
+  if (inputCity === undefined) {
+    console.log(fahrenheight);
+  } else {
+    let cityName = `${inputCity.value}`;
+    let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
+    let units = "imperial";
+    let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}`;
+
+    axios.get(apiUrl).then(realTemp);
+  }
+}
+
+function searchCity(event) {
+  //Display City
+  event.preventDefault();
+
+  let inputCity = document.querySelector("#input-city");
+  let newCity = document.querySelector("h1");
+  newCity.innerHTML = `${inputCity.value}`;
+
+  let cityName = `${inputCity.value}`;
+  let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
+  let units = "metric";
+  let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}`;
+  axios.get(apiUrl).then(realTemp);
+}
+function displayCurrentCity(response) {
+  let inputCity = response.data.name;
+  let newCity = document.querySelector("h1");
+  newCity.innerHTML = `${inputCity}`;
+}
+
+function currentCity(position) {
+  //Display current city
+  let lat = position.coords.latitude;
+  let long = position.coords.longitude;
+  let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
+  let units = "metric";
+  // need to display current city ant temp based on latitude
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=${units}`;
+  console.log(apiUrl);
+  axios.get(apiUrl).then(displayCurrentCity);
+  axios.get(apiUrl).then(realTemp);
+}
+
+function sendCurrentCity(event) {
+  navigator.geolocation.getCurrentPosition(currentCity);
+}
+
+let localDate = document.querySelector("#date");
+let now = new Date();
+console.log(now);
+localDate.innerHTML = fomratDate(now);
+
+let form = document.querySelector("#new-city");
+let apiUrl = form.addEventListener("submit", searchCity);
+
+let fahrenheight = document.querySelector("#fahrenheight-link");
+fahrenheight.addEventListener("click", fahrenheightTemp);
+
+let celsius = document.querySelector("#celsius-link");
+celsius.addEventListener("click", celsiusTemp);
+
+let cityForm = document.querySelector("#current-city");
+cityForm.addEventListener("submit", sendCurrentCity);
