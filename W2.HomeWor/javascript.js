@@ -86,17 +86,13 @@ function fahrenheightTemp(event) {
   event.preventDefault();
 
   let inputCity = document.querySelector("#input-city");
-
-  if (inputCity === undefined) {
-    console.log(fahrenheight);
-  } else {
     let cityName = `${inputCity.value}`;
     let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
     let units = "imperial";
     let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}`;
 
     axios.get(apiUrl).then(realTemp);
-  }
+
 }
 
 function searchCity(event) {
