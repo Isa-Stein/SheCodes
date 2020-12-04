@@ -61,75 +61,83 @@ let weeks = [
   "Saturday",
 ];
 
-function realTemp(response) {
-  //retrieve temperature
-  let realTemp = Math.round(response.data.main.temp);
-  let newTemp = document.querySelector("#currentTemp");
-  newTemp.innerHTML = `${realTemp}`;
-}
-
 function celsiusTemp(event) {
   //Display Celsius
   event.preventDefault();
-  let inputCity = document.querySelector("#input-city");
-
-  let cityName = `${inputCity.value}`;
+  let cityName = document.querySelector("#city").innerHTML;
   let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
   let units = "metric";
-  let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}`;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}`;
 
-  axios.get(apiUrl).then(realTemp);
+  axios.get(apiUrl).then(displayWeatherConditions);
 }
 
 function fahrenheightTemp(event) {
   //Display Fahrenheight
   event.preventDefault();
 
-  let inputCity = document.querySelector("#input-city");
-    let cityName = `${inputCity.value}`;
-    let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
-    let units = "imperial";
-    let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}`;
-
-    axios.get(apiUrl).then(realTemp);
-
+  let cityName = document.querySelector("#city").innerHTML;
+  let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
+  let units = "imperial";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}`;
+  console.log(apiUrl);
+  axios.get(apiUrl).then(displayWeatherConditions);
 }
 
-function searchCity(event) {
-  //Display City
-  event.preventDefault();
+function displayWeatherConditions(response) {
+  document.querySelector("h1").innerHTML = response.data.name;
+  document.querySelector("#currentTemp").innerHTML = Math.round(
+    response.data.main.temp
+  );
+  console.log(response.data);
 
-  let inputCity = document.querySelector("#input-city");
-  let newCity = document.querySelector("h1");
-  newCity.innerHTML = `${inputCity.value}`;
+  let mainIcon = document.querySelector("#mainIcon");
+  console.log(response.data.weather[0].main.toLowerCase());
+  if (response.data.weather[0].main.toLowerCase() === "clear") {
+    mainIcon.setAttribute("src", "/Sun.png");
+  } else {
+    if (response.data.weather[0].main.toLowerCase() === "rain") {
+      mainIcon.setAttribute("src", "/Rain.png");
+    } else {
+      if (response.data.weather[0].main.toLowerCase() === "drizzle") {
+        mainIcon.setAttribute("src", "/Drizzle.png");
+      } else {
+        if (response.data.weather[0].main.toLowerCase() === "clouds") {
+          mainIcon.setAttribute("src", "/Cloudy.png");
+        }
+      }
+    }
+  }
+}
 
-  let cityName = `${inputCity.value}`;
+function search(city) {
   let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
   let units = "metric";
-  let apiUrl = `http://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&units=${units}`;
-  axios.get(apiUrl).then(realTemp);
-}
-function displayCurrentCity(response) {
-  let inputCity = response.data.name;
-  let newCity = document.querySelector("h1");
-  newCity.innerHTML = `${inputCity}`;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=${units}`;
+
+  axios.get(apiUrl).then(displayWeatherConditions);
 }
 
-function currentCity(position) {
+function handleSearchCity(event) {
+  //Display City
+  event.preventDefault();
+  let inputCity = document.querySelector("#input-city").value;
+  search(inputCity);
+}
+
+function sendCurrentCity(position) {
   //Display current city
   let lat = position.coords.latitude;
   let long = position.coords.longitude;
   let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
   let units = "metric";
-  // need to display current city ant temp based on latitude
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=${units}`;
   console.log(apiUrl);
-  axios.get(apiUrl).then(displayCurrentCity);
-  axios.get(apiUrl).then(realTemp);
+  axios.get(apiUrl).then(displayWeatherConditions);
 }
 
-function sendCurrentCity(event) {
-  navigator.geolocation.getCurrentPosition(currentCity);
+function getCurrentCity(event) {
+  navigator.geolocation.getCurrentPosition(sendCurrentCity);
 }
 
 let localDate = document.querySelector("#date");
@@ -138,7 +146,7 @@ console.log(now);
 localDate.innerHTML = fomratDate(now);
 
 let form = document.querySelector("#new-city");
-let apiUrl = form.addEventListener("submit", searchCity);
+let apiUrl = form.addEventListener("submit", handleSearchCity);
 
 let fahrenheight = document.querySelector("#fahrenheight-link");
 fahrenheight.addEventListener("click", fahrenheightTemp);
@@ -146,5 +154,7 @@ fahrenheight.addEventListener("click", fahrenheightTemp);
 let celsius = document.querySelector("#celsius-link");
 celsius.addEventListener("click", celsiusTemp);
 
-let cityForm = document.querySelector("#current-city");
-cityForm.addEventListener("submit", sendCurrentCity);
+let cityForm = document.querySelector("#currentCityButton");
+cityForm.addEventListener("click", getCurrentCity);
+
+search("Florence");
