@@ -94,16 +94,16 @@ function displayWeatherConditions(response) {
   let mainIcon = document.querySelector("#mainIcon");
   console.log(response.data.weather[0].main.toLowerCase());
   if (response.data.weather[0].main.toLowerCase() === "clear") {
-    mainIcon.setAttribute("src", "/Sun.png");
+    mainIcon.setAttribute("src", "/Immg/Sun.png");
   } else {
     if (response.data.weather[0].main.toLowerCase() === "rain") {
-      mainIcon.setAttribute("src", "/Rain.png");
+      mainIcon.setAttribute("src", "/Immg//Rain.png");
     } else {
       if (response.data.weather[0].main.toLowerCase() === "drizzle") {
-        mainIcon.setAttribute("src", "/Drizzle.png");
+        mainIcon.setAttribute("src", "/Immg//Drizzle.png");
       } else {
         if (response.data.weather[0].main.toLowerCase() === "clouds") {
-          mainIcon.setAttribute("src", "/Cloudy.png");
+          mainIcon.setAttribute("src", "/Immg//Cloudy.png");
         }
       }
     }
