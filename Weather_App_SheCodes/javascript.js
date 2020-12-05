@@ -92,9 +92,9 @@ function displayWeatherConditions(response) {
   console.log(response.data);
 
   let mainIcon = document.querySelector("#mainIcon");
-  console.log(response.data.weather[0].main.toLowerCase());
+  console.log(response.data.weather[0].description);
   let iconDesc = document.querySelector("#weather-description");
-  iconDesc.innerHTML = response.data.weather[0].main;
+  iconDesc.innerHTML = response.data.weather[0].description;
 
   if (response.data.weather[0].main.toLowerCase() === "clear") {
     mainIcon.setAttribute(
