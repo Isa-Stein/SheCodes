@@ -72,7 +72,7 @@ function celsiusTemp(event) {
   axios.get(apiUrl).then(displayWeatherConditions);
 }
 
-function fahrenheightTemp(event) {
+function fahrenheitTemp(event) {
   //Display Fahrenheight
   event.preventDefault();
 
@@ -94,16 +94,28 @@ function displayWeatherConditions(response) {
   let mainIcon = document.querySelector("#mainIcon");
   console.log(response.data.weather[0].main.toLowerCase());
   if (response.data.weather[0].main.toLowerCase() === "clear") {
-    mainIcon.setAttribute("src", "/Immg/Sun.png");
+    mainIcon.setAttribute(
+      "src",
+      "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Sun.png"
+    );
   } else {
     if (response.data.weather[0].main.toLowerCase() === "rain") {
-      mainIcon.setAttribute("src", "/Immg//Rain.png");
+      mainIcon.setAttribute(
+        "src",
+        "//Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Rain.png"
+      );
     } else {
       if (response.data.weather[0].main.toLowerCase() === "drizzle") {
-        mainIcon.setAttribute("src", "/Immg//Drizzle.png");
+        mainIcon.setAttribute(
+          "src",
+          "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Drizzle.png"
+        );
       } else {
         if (response.data.weather[0].main.toLowerCase() === "clouds") {
-          mainIcon.setAttribute("src", "/Immg//Cloudy.png");
+          mainIcon.setAttribute(
+            "src",
+            "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Cloudy.png"
+          );
         }
       }
     }
@@ -148,8 +160,8 @@ localDate.innerHTML = fomratDate(now);
 let form = document.querySelector("#new-city");
 let apiUrl = form.addEventListener("submit", handleSearchCity);
 
-let fahrenheight = document.querySelector("#fahrenheight-link");
-fahrenheight.addEventListener("click", fahrenheightTemp);
+let fahrenheit = document.querySelector("#fahrenheit-link");
+fahrenheit.addEventListener("click", fahrenheitTemp);
 
 let celsius = document.querySelector("#celsius-link");
 celsius.addEventListener("click", celsiusTemp);
