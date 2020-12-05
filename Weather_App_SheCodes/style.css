@@ -1,10 +1,19 @@
 h1 {
-  font-size: 38px;
+  font-size: 40px;
+  font-family: "Martel", serif;
+  font-weight: 700px;
+  padding-top: 15px;
 }
 
 h2 {
   font-size: 24px;
   font-weight: 400px;
+  font-family: "Martel", serif;
+}
+h3 {
+  font-family: "Martel", serif;
+  font-size: 24px;
+  padding-top: 5px;
 }
 
 img {
@@ -28,10 +37,17 @@ img {
 
 .mainIcon {
   height: 150px;
+  position: relative;
+  top: -10px;
 }
 
-#currentWeather {
-  padding-bottom: 20px;
+.mainIconDesc {
+  font-family: "Dancing Script", cursive;
+  font-size: 25px;
+  display: block;
+  text-align: center;
+  position: relative;
+  top: -18px;
 }
 
 .secondaryIcon {
@@ -51,6 +67,11 @@ img {
   top: -2px;
 }
 
+/* .forecast {
+  padding-top: 10px;
+} */
 #forecast {
   text-align: center;
+  font-family: "Martel", serif;
+  font-size: 14px;
 }

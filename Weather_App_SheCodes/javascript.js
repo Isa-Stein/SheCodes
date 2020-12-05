@@ -93,6 +93,9 @@ function displayWeatherConditions(response) {
 
   let mainIcon = document.querySelector("#mainIcon");
   console.log(response.data.weather[0].main.toLowerCase());
+  let iconDesc = document.querySelector("#weather-description");
+  iconDesc.innerHTML = response.data.weather[0].main;
+
   if (response.data.weather[0].main.toLowerCase() === "clear") {
     mainIcon.setAttribute(
       "src",
@@ -102,7 +105,7 @@ function displayWeatherConditions(response) {
     if (response.data.weather[0].main.toLowerCase() === "rain") {
       mainIcon.setAttribute(
         "src",
-        "//Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Rain.png"
+        "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Rain.png"
       );
     } else {
       if (response.data.weather[0].main.toLowerCase() === "drizzle") {
@@ -116,6 +119,26 @@ function displayWeatherConditions(response) {
             "src",
             "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Cloudy.png"
           );
+        } else {
+          if (
+            response.data.weather[0].main.toLowerCase() === "snow" ||
+            response.data.weather[0].main.toLowerCase() === "hail"
+          ) {
+            mainIcon.setAttribute(
+              "src",
+              "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Snow.png"
+            );
+          } else {
+            if (
+              response.data.weather[0].main.toLowerCase() === "fog" ||
+              response.data.weather[0].main.toLowerCase() === "mist"
+            ) {
+              mainIcon.setAttribute(
+                "src",
+                "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Fog.png"
+              );
+            }
+          }
         }
       }
     }
