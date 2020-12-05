@@ -97,37 +97,22 @@ function displayWeatherConditions(response) {
   iconDesc.innerHTML = response.data.weather[0].description;
 
   if (response.data.weather[0].main.toLowerCase() === "clear") {
-    mainIcon.setAttribute(
-      "src",
-      "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Sun.png"
-    );
+    mainIcon.setAttribute("src", "/Weather_App_SheCodes/Immg/Sun.png");
   } else {
     if (response.data.weather[0].main.toLowerCase() === "rain") {
-      mainIcon.setAttribute(
-        "src",
-        "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Rain.png"
-      );
+      mainIcon.setAttribute("src", "/Weather_App_SheCodes/Immg/Rain.png");
     } else {
       if (response.data.weather[0].main.toLowerCase() === "drizzle") {
-        mainIcon.setAttribute(
-          "src",
-          "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Drizzle.png"
-        );
+        mainIcon.setAttribute("src", "/Weather_App_SheCodes/Immg/Drizzle.png");
       } else {
         if (response.data.weather[0].main.toLowerCase() === "clouds") {
-          mainIcon.setAttribute(
-            "src",
-            "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Cloudy.png"
-          );
+          mainIcon.setAttribute("src", "/Weather_App_SheCodes/Immg/Cloudy.png");
         } else {
           if (
             response.data.weather[0].main.toLowerCase() === "snow" ||
             response.data.weather[0].main.toLowerCase() === "hail"
           ) {
-            mainIcon.setAttribute(
-              "src",
-              "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Snow.png"
-            );
+            mainIcon.setAttribute("src", "/Weather_App_SheCodes/Immg/Snow.png");
           } else {
             if (
               response.data.weather[0].main.toLowerCase() === "fog" ||
@@ -135,7 +120,7 @@ function displayWeatherConditions(response) {
             ) {
               mainIcon.setAttribute(
                 "src",
-                "/Users/Brina/Documents/GitHub/SheCodes/Weather_App_SheCodes/Immg/Fog.png"
+                "/Weather_App_SheCodes/Immg/Fog.png"
               );
             }
           }
