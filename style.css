@@ -67,11 +67,14 @@ img {
   top: -2px;
 }
 
-/* .forecast {
-  padding-top: 10px;
-} */
 #forecast {
   text-align: center;
   font-family: "Martel", serif;
   font-size: 14px;
+}
+
+.developerTag {
+  line-height: 1.5;
+  text-align: center;
+  font-family: "Martel", serif;
 }
