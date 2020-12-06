@@ -49,6 +49,7 @@ function fomratDate(date) {
 
   return `${currentDay}${descriptor} ${currentMonth} ${currentYear}`;
 }
+// Forecast Day display
 
 //Display correct weekdays
 let weeks = [
@@ -89,39 +90,39 @@ function displayWeatherConditions(response) {
   document.querySelector("#currentTemp").innerHTML = Math.round(
     response.data.main.temp
   );
+  document.querySelector("#wind-speed").innerHTML = Math.round(
+    response.data.wind.speed
+  );
   console.log(response.data);
 
   let mainIcon = document.querySelector("#mainIcon");
-  console.log(response.data.weather[0].description);
+  console.log(response.data.weather[0].main);
   let iconDesc = document.querySelector("#weather-description");
-  iconDesc.innerHTML = response.data.weather[0].description;
+  iconDesc.innerHTML = response.data.weather[0].main;
 
   if (response.data.weather[0].main.toLowerCase() === "clear") {
-    mainIcon.setAttribute("src", "/Weather_App_SheCodes/Immg/Sun.png");
+    mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Sun.png");
   } else {
     if (response.data.weather[0].main.toLowerCase() === "rain") {
-      mainIcon.setAttribute("src", "/Weather_App_SheCodes/Immg/Rain.png");
+      mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Rain.png");
     } else {
       if (response.data.weather[0].main.toLowerCase() === "drizzle") {
-        mainIcon.setAttribute("src", "/Weather_App_SheCodes/Immg/Drizzle.png");
+        mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Drizzle.png");
       } else {
         if (response.data.weather[0].main.toLowerCase() === "clouds") {
-          mainIcon.setAttribute("src", "/Weather_App_SheCodes/Immg/Cloudy.png");
+          mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Cloudy.png");
         } else {
           if (
             response.data.weather[0].main.toLowerCase() === "snow" ||
             response.data.weather[0].main.toLowerCase() === "hail"
           ) {
-            mainIcon.setAttribute("src", "/Weather_App_SheCodes/Immg/Snow.png");
+            mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Snow.png");
           } else {
             if (
               response.data.weather[0].main.toLowerCase() === "fog" ||
               response.data.weather[0].main.toLowerCase() === "mist"
             ) {
-              mainIcon.setAttribute(
-                "src",
-                "/Weather_App_SheCodes/Immg/Fog.png"
-              );
+              mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Fog.png");
             }
           }
         }
@@ -154,6 +155,7 @@ function sendCurrentCity(position) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${long}&appid=${apiKey}&units=${units}`;
   console.log(apiUrl);
   axios.get(apiUrl).then(displayWeatherConditions);
+  /*  axios.get(apiUrl).then(wetherForecast); */
 }
 
 function getCurrentCity(event) {
@@ -178,3 +180,17 @@ let cityForm = document.querySelector("#currentCityButton");
 cityForm.addEventListener("click", getCurrentCity);
 
 search("Florence");
+
+function displayForecast(response) {
+  console.log(response.data.city.name);
+  console.log(response.data.list[0]);
+}
+
+function weatherForecast(city) {
+  let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
+  let units = "metric";
+  let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
+
+  axios(apiUrl).then(displayForecast);
+}
+weatherForecast("Rome");
