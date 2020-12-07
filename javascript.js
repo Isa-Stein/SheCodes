@@ -262,8 +262,8 @@ function search(city) {
 
   console.log(apiUrl);
   axios.get(apiUrl).then(displayWeatherConditions);
-  axios.get(apiUrl).then(displayForecast);
-  axios.get(apiUrl).then(secondaryIcons);
+  /* axios.get(apiUrl).then(displayForecast);
+  axios.get(apiUrl).then(secondaryIcons); */
 }
 
 function handleSearchCity(event) {
