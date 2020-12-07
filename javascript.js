@@ -132,16 +132,37 @@ function fahrenheitTemp(event) {
   document.querySelector("#wind-units").innerHTML = "mph";
 }
 
-function processForecast (response) {
-  let forecastData = response.data.list;
-  forecastData.forEach(list =< 5 {
-    //Attempt for each list run and display forecast
-  });
-}
-
-
+/* function processForecast(response) {
+  for (i = 0; i <= 5; i++) {
+    console.log(Math.round(response.data.list[i].main.temp_max));
+    
+    let location = `#day-${arrrayNumber}-max-temp`;
+    if ([i] === 0) {
+      arrayNumber = "zero";
+    } else {
+      if ([i] === 1) {
+        arrayNumber = "one";
+      } else {
+        if ([i] === 2) {
+          arrayNumber = "two";
+        } else {
+          if ([i] === 3) {
+            arrayNumber = "three";
+          } else {
+            if ([i] === 4) {
+              arrayNumber = "four";
+            } else {
+              if ([i] === 5) {
+                arrayNumber = "five";
+              }
+            }
+          }
+        }
+      }
+    } */
+//Attempt for loop forecast
+/* 
 function displayForecast(response) {
-  console.log(response.data.list);
   //Day Zero
   document.querySelector("#day-zero-max-temp").innerHTML = Math.round(
     response.data.list[0].main.temp_max
@@ -185,38 +206,53 @@ function displayForecast(response) {
     response.data.list[5].main.temp_min
   );
 }
-/* 
-function secondayIcons(response) {
-  let secondaryIcon = document.querySelector("#secondary-icon");
-  let weatherDescription = response.data.list[0].weather[0].main.toLowerCase();
-  console.log(response.data.list[0].weather[0].main);
 
-  if (weatherDescription === "clear") {
-    mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Sun.png");
-  } else {
-    if (weatherDescription === "rain") {
-      mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Rain.png");
+function secondaryIcons(response) {
+  let secondaryIcon = document.querySelector("#day-one-secondary-icon");
+  for (i = 0; i <= 5; i++)
+    if (response.data.list[i].weather[0].main.toLowerCase() === "clear") {
+      secondaryIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Sun.png");
     } else {
-      if (weatherDescription === "drizzle") {
-        mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Drizzle.png");
+      if (response.data.list[i].weather[0].main.toLowerCase() === "rain") {
+        secondaryIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Rain.png");
       } else {
-        if (weatherDescription === "clouds") {
-          mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Cloudy.png");
+        if (response.data.list[i].weather[0].main.toLowerCase() === "drizzle") {
+          secondaryIcon.setAttribute(
+            "src",
+            "Weather_App_SheCodes/Immg/Drizzle.png"
+          );
         } else {
-          if (weatherDescription === "snow" || weatherDescription === "hail") {
-            mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Snow.png");
+          if (
+            response.data.list[i].weather[0].main.toLowerCase() === "clouds"
+          ) {
+            secondaryIcon.setAttribute(
+              "src",
+              "Weather_App_SheCodes/Immg/Cloudy.png"
+            );
           } else {
             if (
-              response.data.weather[0].main.toLowerCase() === "fog" ||
-              response.data.weather[0].main.toLowerCase() === "mist"
+              response.data.list[i].weather[0].main.toLowerCase() === "snow" ||
+              response.data.list[i].weather[0].main.toLowerCase() === "hail"
             ) {
-              mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Fog.png");
+              secondaryIcon.setAttribute(
+                "src",
+                "Weather_App_SheCodes/Immg/Snow.png"
+              );
+            } else {
+              if (
+                response.data.list[i].weather[0].main.toLowerCase() === "fog" ||
+                response.data.list[i].weather[0].main.toLowerCase() === "mist"
+              ) {
+                secondaryIcon.setAttribute(
+                  "src",
+                  "Weather_App_SheCodes/Immg/Fog.png"
+                );
+              }
             }
           }
         }
       }
     }
-  }
 } */
 
 function search(city) {
@@ -226,7 +262,8 @@ function search(city) {
 
   console.log(apiUrl);
   axios.get(apiUrl).then(displayWeatherConditions);
-  axios.get(apiUrl).then(processForecast);
+  axios.get(apiUrl).then(displayForecast);
+  axios.get(apiUrl).then(secondaryIcons);
 }
 
 function handleSearchCity(event) {
