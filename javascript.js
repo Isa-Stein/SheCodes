@@ -49,18 +49,6 @@ function fomratDate(date) {
 
   return `${currentDay}${descriptor} ${currentMonth} ${currentYear}`;
 }
-// Forecast Day display
-
-//Display correct weekdays
-let weeks = [
-  "Sunday",
-  "Monday",
-  "Tuesday",
-  "Wednesday",
-  "Thursday",
-  "Friday",
-  "Saturday",
-];
 
 function displayWeatherConditions(response) {
   //Today Forecast
@@ -132,84 +120,60 @@ function fahrenheitTemp(event) {
   document.querySelector("#wind-units").innerHTML = "mph";
 }
 
-/* function processForecast(response) {
-  for (i = 0; i <= 5; i++) {
-    console.log(Math.round(response.data.list[i].main.temp_max));
-    
-    let location = `#day-${arrrayNumber}-max-temp`;
-    if ([i] === 0) {
-      arrayNumber = "zero";
-    } else {
-      if ([i] === 1) {
-        arrayNumber = "one";
-      } else {
-        if ([i] === 2) {
-          arrayNumber = "two";
-        } else {
-          if ([i] === 3) {
-            arrayNumber = "three";
-          } else {
-            if ([i] === 4) {
-              arrayNumber = "four";
-            } else {
-              if ([i] === 5) {
-                arrayNumber = "five";
-              }
-            }
-          }
-        }
-      }
-    } */
-//Attempt for loop forecast
-/* 
 function displayForecast(response) {
-  //Day Zero
-  document.querySelector("#day-zero-max-temp").innerHTML = Math.round(
-    response.data.list[0].main.temp_max
-  );
-  document.querySelector("#day-zero-min-temp").innerHTML = Math.round(
-    response.data.list[0].main.temp_min
-  );
-  //Day One
-  document.querySelector("#day-one-max-temp").innerHTML = Math.round(
+  console.log(response);
+
+  //Hour One
+  document.querySelector("#hour-one-max-temp").innerHTML = Math.round(
     response.data.list[1].main.temp_max
   );
-  document.querySelector("#day-one-min-temp").innerHTML = Math.round(
+  document.querySelector("#hour-one-min-temp").innerHTML = Math.round(
     response.data.list[1].main.temp_min
   );
-  //Day Two
-  document.querySelector("#day-two-max-temp").innerHTML = Math.round(
+  //Hour Two
+  document.querySelector("#hour-two-max-temp").innerHTML = Math.round(
     response.data.list[2].main.temp_max
   );
-  document.querySelector("#day-two-min-temp").innerHTML = Math.round(
+  document.querySelector("#hour-two-min-temp").innerHTML = Math.round(
     response.data.list[2].main.temp_min
   );
-  //Day Three
-  document.querySelector("#day-three-max-temp").innerHTML = Math.round(
+  //Hour Three
+  document.querySelector("#hour-three-max-temp").innerHTML = Math.round(
     response.data.list[3].main.temp_max
   );
-  document.querySelector("#day-three-min-temp").innerHTML = Math.round(
+  document.querySelector("#hour-three-min-temp").innerHTML = Math.round(
     response.data.list[3].main.temp_min
   );
-  //Day Four
-  document.querySelector("#day-four-max-temp").innerHTML = Math.round(
+  //Hour Four
+  document.querySelector("#hour-four-max-temp").innerHTML = Math.round(
     response.data.list[4].main.temp_max
   );
-  document.querySelector("#day-four-min-temp").innerHTML = Math.round(
+  document.querySelector("#hour-four-min-temp").innerHTML = Math.round(
     response.data.list[4].main.temp_min
   );
-  //Day Five
-  document.querySelector("#day-five-max-temp").innerHTML = Math.round(
+  //Hour Five
+  document.querySelector("#hour-five-max-temp").innerHTML = Math.round(
     response.data.list[5].main.temp_max
   );
-  document.querySelector("#day-five-min-temp").innerHTML = Math.round(
+  document.querySelector("#hour-five-min-temp").innerHTML = Math.round(
     response.data.list[5].main.temp_min
   );
 }
 
 function secondaryIcons(response) {
-  let secondaryIcon = document.querySelector("#day-one-secondary-icon");
-  for (i = 0; i <= 5; i++)
+  iconsArray = [
+    "#hour-one-secondary-icon",
+    "#hour-two-secondary-icon",
+    "#hour-three-secondary-icon",
+    "#hour-four-secondary-icon",
+    "#hour-five-secondary-icon",
+  ];
+  var i;
+  for (i === 0; i === 4; i++) {
+    console.log(iconsArray[i]);
+
+    let secondaryIcon = document.querySelector(iconsArray[i]);
+
     if (response.data.list[i].weather[0].main.toLowerCase() === "clear") {
       secondaryIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Sun.png");
     } else {
@@ -253,7 +217,8 @@ function secondaryIcons(response) {
         }
       }
     }
-} */
+  }
+}
 
 function search(city) {
   let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
@@ -262,8 +227,8 @@ function search(city) {
 
   console.log(apiUrl);
   axios.get(apiUrl).then(displayWeatherConditions);
-  /* axios.get(apiUrl).then(displayForecast);
-  axios.get(apiUrl).then(secondaryIcons); */
+  axios.get(apiUrl).then(displayForecast);
+  axios.get(apiUrl).then(secondaryIcons);
 }
 
 function handleSearchCity(event) {
