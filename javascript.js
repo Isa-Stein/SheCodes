@@ -105,6 +105,7 @@ function celsiusTemp(event) {
   let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=${units}`;
 
   axios.get(apiUrl).then(displayWeatherConditions);
+  axios.get(apiUrl).then(displayForecast);
   document.querySelector("#wind-units").innerHTML = "m/s";
 }
 
@@ -117,6 +118,7 @@ function fahrenheitTemp(event) {
   let units = "imperial";
   let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(displayWeatherConditions);
+  axios.get(apiUrl).then(displayForecast);
   document.querySelector("#wind-units").innerHTML = "mph";
 }
 
@@ -160,43 +162,45 @@ function displayForecast(response) {
   );
 }
 
-function secondaryIcons(response) {
-  iconsArray = [
-    "#hour-one-secondary-icon",
-    "#hour-two-secondary-icon",
-    "#hour-three-secondary-icon",
-    "#hour-four-secondary-icon",
-    "#hour-five-secondary-icon",
-  ];
-  var i;
-  for (i === 0; i === 4; i++) {
-    console.log(iconsArray[i]);
+function secondaryIconsLoop(response) {
+  // I have attempted to loop the  action of setting the new Icons for hte forecast but am unable to make this work.COuld you provide me with some feedback please?//
 
-    let secondaryIcon = document.querySelector(iconsArray[i]);
+  iconsArray = null;
 
-    if (response.data.list[i].weather[0].main.toLowerCase() === "clear") {
+  let forcastInfo = null;
+  for (index = 0; index < 5; index++) {
+    iconsArray = [
+      "#hour-one-secondary-icon",
+      "#hour-two-secondary-icon",
+      "#hour-three-secondary-icon",
+      "#hour-four-secondary-icon",
+      "#hour-five-secondary-icon",
+    ];
+    let secondaryIcon = document.querySelector(iconsArray[index]);
+    console.log(iconsArray[index]);
+
+    forcastInfo = response.data.list[index];
+    if (forcastInfo.weather[0].main.toLowerCase() === "clear") {
       secondaryIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Sun.png");
     } else {
-      if (response.data.list[i].weather[0].main.toLowerCase() === "rain") {
+      if (forcastInfo.weather[0].main.toLowerCase() === "rain") {
         secondaryIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Rain.png");
       } else {
-        if (response.data.list[i].weather[0].main.toLowerCase() === "drizzle") {
+        if (forcastInfo.weather[0].main.toLowerCase() === "drizzle") {
           secondaryIcon.setAttribute(
             "src",
             "Weather_App_SheCodes/Immg/Drizzle.png"
           );
         } else {
-          if (
-            response.data.list[i].weather[0].main.toLowerCase() === "clouds"
-          ) {
+          if (forcastInfo.weather[0].main.toLowerCase() === "clouds") {
             secondaryIcon.setAttribute(
               "src",
               "Weather_App_SheCodes/Immg/Cloudy.png"
             );
           } else {
             if (
-              response.data.list[i].weather[0].main.toLowerCase() === "snow" ||
-              response.data.list[i].weather[0].main.toLowerCase() === "hail"
+              forcastInfo.weather[0].main.toLowerCase() === "snow" ||
+              forcastInfo.weather[0].main.toLowerCase() === "hail"
             ) {
               secondaryIcon.setAttribute(
                 "src",
@@ -204,8 +208,8 @@ function secondaryIcons(response) {
               );
             } else {
               if (
-                response.data.list[i].weather[0].main.toLowerCase() === "fog" ||
-                response.data.list[i].weather[0].main.toLowerCase() === "mist"
+                forcastInfoweather[0].main.toLowerCase() === "fog" ||
+                forcastInfo.weather[0].main.toLowerCase() === "mist"
               ) {
                 secondaryIcon.setAttribute(
                   "src",
@@ -228,7 +232,7 @@ function search(city) {
   console.log(apiUrl);
   axios.get(apiUrl).then(displayWeatherConditions);
   axios.get(apiUrl).then(displayForecast);
-  axios.get(apiUrl).then(secondaryIcons);
+  axios.get(apiUrl).then(secondaryIconsLoop);
 }
 
 function handleSearchCity(event) {
