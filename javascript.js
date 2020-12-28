@@ -59,14 +59,12 @@ function displayWeatherConditions(response) {
   document.querySelector("#wind-speed").innerHTML = Math.round(
     response.data.list[0].wind.speed
   );
-  console.log(response.data);
 
   let iconDesc = document.querySelector("#weather-description");
   iconDesc.innerHTML = response.data.list[0].weather[0].main;
 
   let mainIcon = document.querySelector("#mainIcon");
   let weatherDescription = response.data.list[0].weather[0].main.toLowerCase();
-  console.log(response.data.list[0].weather[0].main);
 
   if (weatherDescription === "clear") {
     mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Sun.png");
@@ -163,7 +161,7 @@ function timeForecast(response) {
       "#hour-four",
       "#hour-five",
     ];
-    console.log(foreTime);
+
     date = new Date(response.data.list[index].dt * 1000);
 
     let currentHour = date.getHours();
@@ -175,7 +173,6 @@ function timeForecast(response) {
       currentMinutes = `0${currentMinutes}`;
     }
     let time = `${currentHour}:${currentMinutes}`;
-    console.log(time);
 
     document.querySelector(foreTime[index]).innerHTML = time;
   }
@@ -243,7 +240,6 @@ function search(city) {
   let units = "metric";
   let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=${units}`;
 
-  console.log(apiUrl);
   axios.get(apiUrl).then(displayWeatherConditions);
   axios.get(apiUrl).then(displayForecast);
   axios.get(apiUrl).then(secondaryIconsLoop);
@@ -264,7 +260,6 @@ function sendCurrentCity(position) {
   let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
   let units = "metric";
   let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}&units=${units}`;
-  console.log(apiUrl);
   axios.get(apiUrl).then(displayWeatherConditions);
 }
 
@@ -274,7 +269,6 @@ function getCurrentCity(event) {
 
 let localDate = document.querySelector("#date");
 let now = new Date();
-console.log(now);
 localDate.innerHTML = fomratDate(now);
 
 let form = document.querySelector("#new-city");
