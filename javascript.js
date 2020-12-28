@@ -142,7 +142,6 @@ function displayForecast(response) {
       "#hour-five-min-temp",
     ];
 
-    //Hour One
     document.querySelector(maxTempArray[index]).innerHTML = Math.round(
       forecast.main.temp_max
     );
@@ -152,12 +151,40 @@ function displayForecast(response) {
   }
 }
 
-function secondaryIconsLoop(response) {
-  iconsArray = null;
+function timeForecast(response) {
+  let date = response.data.list[0].dt * 1000;
+  let foreTime = null;
 
+  for (index = 0; index < 5; index++) {
+    foreTime = [
+      "#hour-one",
+      "#hour-two",
+      "#hour-three",
+      "#hour-four",
+      "#hour-five",
+    ];
+    console.log(foreTime);
+    date = new Date(response.data.list[index].dt * 1000);
+
+    let currentHour = date.getHours();
+    if (currentHour < 10) {
+      currentHour = `0${currentHour}`;
+    }
+    let currentMinutes = date.getMinutes();
+    if (currentMinutes < 10) {
+      currentMinutes = `0${currentMinutes}`;
+    }
+    let time = `${currentHour}:${currentMinutes}`;
+    console.log(time);
+
+    document.querySelector(foreTime[index]).innerHTML = time;
+  }
+}
+
+function secondaryIconsLoop(response) {
   let forcastInfo = null;
   for (index = 0; index < 5; index++) {
-    iconsArray = [
+    let iconsArray = [
       "#hour-one-secondary-icon",
       "#hour-two-secondary-icon",
       "#hour-three-secondary-icon",
@@ -165,7 +192,6 @@ function secondaryIconsLoop(response) {
       "#hour-five-secondary-icon",
     ];
     let secondaryIcon = document.querySelector(iconsArray[index]);
-    console.log(iconsArray[index]);
 
     forcastInfo = response.data.list[index];
     if (forcastInfo.weather[0].main.toLowerCase() === "clear") {
@@ -221,6 +247,7 @@ function search(city) {
   axios.get(apiUrl).then(displayWeatherConditions);
   axios.get(apiUrl).then(displayForecast);
   axios.get(apiUrl).then(secondaryIconsLoop);
+  axios.get(apiUrl).then(timeForecast);
 }
 
 function handleSearchCity(event) {
