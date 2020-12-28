@@ -28,12 +28,13 @@ img {
 }
 .card {
   margin: 20px auto;
-  max-width: 900px;
+  max-width: 800px;
   background-color: rgb(116, 236, 247, 0.1);
   border: 2px solid rgb(4, 122, 251, 0.2);
   border-radius: 10px;
   box-shadow: 5px 5px 5px rgb(0, 0, 0, 0.1);
 }
+
 .tempUnits {
   font-size: 16px;
 }
