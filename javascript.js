@@ -123,48 +123,36 @@ function fahrenheitTemp(event) {
 }
 
 function displayForecast(response) {
-  console.log(response);
+  let forecast = null;
 
-  //Hour One
-  document.querySelector("#hour-one-max-temp").innerHTML = Math.round(
-    response.data.list[1].main.temp_max
-  );
-  document.querySelector("#hour-one-min-temp").innerHTML = Math.round(
-    response.data.list[1].main.temp_min
-  );
-  //Hour Two
-  document.querySelector("#hour-two-max-temp").innerHTML = Math.round(
-    response.data.list[2].main.temp_max
-  );
-  document.querySelector("#hour-two-min-temp").innerHTML = Math.round(
-    response.data.list[2].main.temp_min
-  );
-  //Hour Three
-  document.querySelector("#hour-three-max-temp").innerHTML = Math.round(
-    response.data.list[3].main.temp_max
-  );
-  document.querySelector("#hour-three-min-temp").innerHTML = Math.round(
-    response.data.list[3].main.temp_min
-  );
-  //Hour Four
-  document.querySelector("#hour-four-max-temp").innerHTML = Math.round(
-    response.data.list[4].main.temp_max
-  );
-  document.querySelector("#hour-four-min-temp").innerHTML = Math.round(
-    response.data.list[4].main.temp_min
-  );
-  //Hour Five
-  document.querySelector("#hour-five-max-temp").innerHTML = Math.round(
-    response.data.list[5].main.temp_max
-  );
-  document.querySelector("#hour-five-min-temp").innerHTML = Math.round(
-    response.data.list[5].main.temp_min
-  );
+  for (index = 0; index < 5; index++) {
+    forecast = response.data.list[index];
+    let maxTempArray = [
+      "#hour-one-max-temp",
+      "#hour-two-max-temp",
+      "#hour-three-max-temp",
+      "#hour-four-max-temp",
+      "#hour-five-max-temp",
+    ];
+    let minTempArray = [
+      "#hour-one-min-temp",
+      "#hour-two-min-temp",
+      "#hour-three-min-temp",
+      "#hour-four-min-temp",
+      "#hour-five-min-temp",
+    ];
+
+    //Hour One
+    document.querySelector(maxTempArray[index]).innerHTML = Math.round(
+      forecast.main.temp_max
+    );
+    document.querySelector(minTempArray[index]).innerHTML = Math.round(
+      forecast.main.temp_min
+    );
+  }
 }
 
 function secondaryIconsLoop(response) {
-  // I have attempted to loop the  action of setting the new Icons for hte forecast but am unable to make this work.COuld you provide me with some feedback please?//
-
   iconsArray = null;
 
   let forcastInfo = null;
@@ -208,7 +196,7 @@ function secondaryIconsLoop(response) {
               );
             } else {
               if (
-                forcastInfoweather[0].main.toLowerCase() === "fog" ||
+                forcastInfo.weather[0].main.toLowerCase() === "fog" ||
                 forcastInfo.weather[0].main.toLowerCase() === "mist"
               ) {
                 secondaryIcon.setAttribute(
