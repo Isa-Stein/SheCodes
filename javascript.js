@@ -86,6 +86,10 @@ function displayWeatherConditions(response) {
               response.data.weather[0].main.toLowerCase() === "mist"
             ) {
               mainIcon.setAttribute("src", "Weather_App_SheCodes/Immg/Fog.png");
+              mainIcon.setAttribute(
+                "alt",
+                response.data.list[0].weather[0].main
+              );
             }
           }
         }
