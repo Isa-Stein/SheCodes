@@ -40,7 +40,8 @@ mainIconDesc {
 }
 
 .tempUnits {
-  font-size: 16px;
+  font-size: 14px;
+  line-height: 14px;
 }
 
 .mainIcon {
@@ -89,4 +90,13 @@ mainIconDesc {
 
 .col-2 {
   padding: 0 5px;
+}
+
+.tempUnits .active {
+  color: rgb(0, 0, 0);
+}
+
+.active:hover {
+  cursor: default;
+  text-decoration: none;
 }

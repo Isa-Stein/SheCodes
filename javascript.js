@@ -106,6 +106,9 @@ function celsiusTemp(event) {
   let units = "metric";
   let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=${units}`;
 
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+
   axios.get(apiUrl).then(displayWeatherConditions);
   axios.get(apiUrl).then(displayForecast);
   document.querySelector("#wind-units").innerHTML = "m/s";
@@ -119,6 +122,10 @@ function fahrenheitTemp(event) {
   let apiKey = "14b4ec50bfdac6afc3e3c9dd658e26fe";
   let units = "imperial";
   let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?q=${cityName}&appid=${apiKey}&units=${units}`;
+
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+
   axios.get(apiUrl).then(displayWeatherConditions);
   axios.get(apiUrl).then(displayForecast);
   document.querySelector("#wind-units").innerHTML = "mph";
@@ -278,11 +285,11 @@ localDate.innerHTML = fomratDate(now);
 let form = document.querySelector("#new-city");
 let apiUrl = form.addEventListener("submit", handleSearchCity);
 
-let fahrenheit = document.querySelector("#fahrenheit-link");
-fahrenheit.addEventListener("click", fahrenheitTemp);
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", fahrenheitTemp);
 
-let celsius = document.querySelector("#celsius-link");
-celsius.addEventListener("click", celsiusTemp);
+let celsiusLink = document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", celsiusTemp);
 
 let cityForm = document.querySelector("#currentCityButton");
 cityForm.addEventListener("click", getCurrentCity);
