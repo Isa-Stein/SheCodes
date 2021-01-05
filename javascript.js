@@ -275,6 +275,7 @@ function sendCurrentCity(position) {
 }
 
 function getCurrentCity(event) {
+  event.preventDefault();
   navigator.geolocation.getCurrentPosition(sendCurrentCity);
 }
 
