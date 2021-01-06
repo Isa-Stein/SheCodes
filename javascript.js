@@ -98,6 +98,38 @@ function displayWeatherConditions(response) {
   }
 }
 
+function displayForecast(response) {
+  console.log(response);
+  let forecast = null;
+  for (index = 0; index < 5; index++) {
+    let maxTempArray = [
+      "#hour-one-max-temp",
+      "#hour-two-max-temp",
+      "#hour-three-max-temp",
+      "#hour-four-max-temp",
+      "#hour-five-max-temp",
+    ];
+    let minTempArray = [
+      "#hour-one-min-temp",
+      "#hour-two-min-temp",
+      "#hour-three-min-temp",
+      "#hour-four-min-temp",
+      "#hour-five-min-temp",
+    ];
+    forecast = response.data.list[index];
+    console.log(forecast);
+
+    document.querySelector(maxTempArray[index]).innerHTML = Math.round(
+      forecast.main.temp_max
+    );
+    document.querySelector(minTempArray[index]).innerHTML = Math.round(
+      forecast.main.temp_min
+    );
+    secondaryIconsLoop(response);
+    timeForecast(response);
+  }
+}
+
 function celsiusTemp(event) {
   //Display Celsius
   event.preventDefault();
@@ -129,35 +161,6 @@ function fahrenheitTemp(event) {
   axios.get(apiUrl).then(displayWeatherConditions);
   axios.get(apiUrl).then(displayForecast);
   document.querySelector("#wind-units").innerHTML = "mph";
-}
-
-function displayForecast(response) {
-  let forecast = null;
-
-  for (index = 0; index < 5; index++) {
-    forecast = response.data.list[index];
-    let maxTempArray = [
-      "#hour-one-max-temp",
-      "#hour-two-max-temp",
-      "#hour-three-max-temp",
-      "#hour-four-max-temp",
-      "#hour-five-max-temp",
-    ];
-    let minTempArray = [
-      "#hour-one-min-temp",
-      "#hour-two-min-temp",
-      "#hour-three-min-temp",
-      "#hour-four-min-temp",
-      "#hour-five-min-temp",
-    ];
-
-    document.querySelector(maxTempArray[index]).innerHTML = Math.round(
-      forecast.main.temp_max
-    );
-    document.querySelector(minTempArray[index]).innerHTML = Math.round(
-      forecast.main.temp_min
-    );
-  }
 }
 
 function timeForecast(response) {
@@ -253,8 +256,8 @@ function search(city) {
 
   axios.get(apiUrl).then(displayWeatherConditions);
   axios.get(apiUrl).then(displayForecast);
-  axios.get(apiUrl).then(secondaryIconsLoop);
-  axios.get(apiUrl).then(timeForecast);
+  /*  axios.get(apiUrl).then(secondaryIconsLoop); */
+  /*   axios.get(apiUrl).then(timeForecast); */
 }
 
 function handleSearchCity(event) {
@@ -272,6 +275,7 @@ function sendCurrentCity(position) {
   let units = "metric";
   let apiUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${apiKey}&units=${units}`;
   axios.get(apiUrl).then(displayWeatherConditions);
+  axios.get(apiUrl).then(displayForecast);
 }
 
 function getCurrentCity(event) {
