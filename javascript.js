@@ -101,23 +101,24 @@ function displayWeatherConditions(response) {
 function displayForecast(response) {
   console.log(response);
   let forecast = null;
+  let maxTempArray = null;
+  let minTempArray = null;
   for (index = 0; index < 5; index++) {
-    let maxTempArray = [
+    forecast = response.data.list[index];
+    maxTempArray = [
       "#hour-one-max-temp",
       "#hour-two-max-temp",
       "#hour-three-max-temp",
       "#hour-four-max-temp",
       "#hour-five-max-temp",
     ];
-    let minTempArray = [
+    minTempArray = [
       "#hour-one-min-temp",
       "#hour-two-min-temp",
       "#hour-three-min-temp",
       "#hour-four-min-temp",
       "#hour-five-min-temp",
     ];
-    forecast = response.data.list[index];
-    console.log(forecast);
 
     document.querySelector(maxTempArray[index]).innerHTML = Math.round(
       forecast.main.temp_max
@@ -125,9 +126,9 @@ function displayForecast(response) {
     document.querySelector(minTempArray[index]).innerHTML = Math.round(
       forecast.main.temp_min
     );
-    secondaryIconsLoop(response);
-    timeForecast(response);
   }
+  secondaryIconsLoop(response);
+  timeForecast(response);
 }
 
 function celsiusTemp(event) {
@@ -256,8 +257,6 @@ function search(city) {
 
   axios.get(apiUrl).then(displayWeatherConditions);
   axios.get(apiUrl).then(displayForecast);
-  /*  axios.get(apiUrl).then(secondaryIconsLoop); */
-  /*   axios.get(apiUrl).then(timeForecast); */
 }
 
 function handleSearchCity(event) {
